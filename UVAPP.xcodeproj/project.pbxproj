@@ -12,7 +12,6 @@
 		5379DA661D3949FC005FEE80 /* ViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 5379DA651D3949FC005FEE80 /* ViewController.m */; };
 		5379DA691D3949FC005FEE80 /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 5379DA671D3949FC005FEE80 /* Main.storyboard */; };
 		5379DA6E1D3949FC005FEE80 /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 5379DA6C1D3949FC005FEE80 /* LaunchScreen.storyboard */; };
-		5379DA761D394ED0005FEE80 /* QuartzCore.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 5379DA751D394ED0005FEE80 /* QuartzCore.framework */; };
 		5379DA7E1D397FB4005FEE80 /* CoreLocation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 5379DA7D1D397FB4005FEE80 /* CoreLocation.framework */; };
 		5379DAAB1D3D72C7005FEE80 /* Contents.json in Resources */ = {isa = PBXBuildFile; fileRef = 5379DA991D3D72C7005FEE80 /* Contents.json */; };
 		A77F5A5E1D5271BF00889483 /* sun1.jpg in Resources */ = {isa = PBXBuildFile; fileRef = A77F5A341D5271BF00889483 /* sun1.jpg */; };
@@ -72,7 +71,6 @@
 		5379DA681D3949FC005FEE80 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/Main.storyboard; sourceTree = "<group>"; };
 		5379DA6D1D3949FC005FEE80 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/LaunchScreen.storyboard; sourceTree = "<group>"; };
 		5379DA6F1D3949FC005FEE80 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
-		5379DA751D394ED0005FEE80 /* QuartzCore.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = QuartzCore.framework; path = System/Library/Frameworks/QuartzCore.framework; sourceTree = SDKROOT; };
 		5379DA7D1D397FB4005FEE80 /* CoreLocation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreLocation.framework; path = System/Library/Frameworks/CoreLocation.framework; sourceTree = SDKROOT; };
 		5379DA991D3D72C7005FEE80 /* Contents.json */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.json; path = Contents.json; sourceTree = "<group>"; };
 		A77F5A341D5271BF00889483 /* sun1.jpg */ = {isa = PBXFileReference; lastKnownFileType = image.jpeg; path = sun1.jpg; sourceTree = "<group>"; };
@@ -129,7 +127,6 @@
 			buildActionMask = 2147483647;
 			files = (
 				5379DA7E1D397FB4005FEE80 /* CoreLocation.framework in Frameworks */,
-				5379DA761D394ED0005FEE80 /* QuartzCore.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -140,7 +137,6 @@
 			isa = PBXGroup;
 			children = (
 				5379DA7D1D397FB4005FEE80 /* CoreLocation.framework */,
-				5379DA751D394ED0005FEE80 /* QuartzCore.framework */,
 				5379DA5D1D3949FC005FEE80 /* UV APP */,
 				5379DA5C1D3949FC005FEE80 /* Products */,
 			);
@@ -266,7 +262,7 @@
 		5379DA531D3949FC005FEE80 /* Project object */ = {
 			isa = PBXProject;
 			attributes = {
-				LastUpgradeCheck = 0730;
+				LastUpgradeCheck = 0800;
 				ORGANIZATIONNAME = "Clyff IOS supercompany";
 				TargetAttributes = {
 					5379DA5A1D3949FC005FEE80 = {
@@ -398,8 +394,10 @@
 				CLANG_WARN_DIRECT_OBJC_ISA_USAGE = YES_ERROR;
 				CLANG_WARN_EMPTY_BODY = YES;
 				CLANG_WARN_ENUM_CONVERSION = YES;
+				CLANG_WARN_INFINITE_RECURSION = YES;
 				CLANG_WARN_INT_CONVERSION = YES;
 				CLANG_WARN_OBJC_ROOT_CLASS = YES_ERROR;
+				CLANG_WARN_SUSPICIOUS_MOVE = YES;
 				CLANG_WARN_UNREACHABLE_CODE = YES;
 				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
 				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
@@ -421,7 +419,7 @@
 				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
 				GCC_WARN_UNUSED_FUNCTION = YES;
 				GCC_WARN_UNUSED_VARIABLE = YES;
-				IPHONEOS_DEPLOYMENT_TARGET = 9.3;
+				IPHONEOS_DEPLOYMENT_TARGET = 8.0;
 				MTL_ENABLE_DEBUG_INFO = YES;
 				ONLY_ACTIVE_ARCH = YES;
 				SDKROOT = iphoneos;
@@ -442,8 +440,10 @@
 				CLANG_WARN_DIRECT_OBJC_ISA_USAGE = YES_ERROR;
 				CLANG_WARN_EMPTY_BODY = YES;
 				CLANG_WARN_ENUM_CONVERSION = YES;
+				CLANG_WARN_INFINITE_RECURSION = YES;
 				CLANG_WARN_INT_CONVERSION = YES;
 				CLANG_WARN_OBJC_ROOT_CLASS = YES_ERROR;
+				CLANG_WARN_SUSPICIOUS_MOVE = YES;
 				CLANG_WARN_UNREACHABLE_CODE = YES;
 				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
 				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
@@ -459,7 +459,7 @@
 				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
 				GCC_WARN_UNUSED_FUNCTION = YES;
 				GCC_WARN_UNUSED_VARIABLE = YES;
-				IPHONEOS_DEPLOYMENT_TARGET = 9.3;
+				IPHONEOS_DEPLOYMENT_TARGET = 8.0;
 				MTL_ENABLE_DEBUG_INFO = NO;
 				SDKROOT = iphoneos;
 				VALIDATE_PRODUCT = YES;
@@ -469,37 +469,41 @@
 		5379DA731D3949FC005FEE80 /* Debug */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
+				ALWAYS_EMBED_SWIFT_STANDARD_LIBRARIES = NO;
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				CLANG_ENABLE_MODULES = YES;
 				CODE_SIGN_IDENTITY = "iPhone Developer";
 				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
 				DEFINES_MODULE = YES;
-				EMBEDDED_CONTENT_CONTAINS_SWIFT = NO;
 				INFOPLIST_FILE = "UV APP/Info.plist";
+				IPHONEOS_DEPLOYMENT_TARGET = 9.0;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
 				PRODUCT_BUNDLE_IDENTIFIER = "org.uvindex.UV-Index-App";
 				PRODUCT_NAME = UVAPP;
 				PROVISIONING_PROFILE = "";
 				SWIFT_OBJC_BRIDGING_HEADER = "UVAPP-Bridging-Header.h";
 				SWIFT_OPTIMIZATION_LEVEL = "-Onone";
+				TARGETED_DEVICE_FAMILY = "1,2";
 			};
 			name = Debug;
 		};
 		5379DA741D3949FC005FEE80 /* Release */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
+				ALWAYS_EMBED_SWIFT_STANDARD_LIBRARIES = NO;
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				CLANG_ENABLE_MODULES = YES;
 				CODE_SIGN_IDENTITY = "iPhone Developer";
 				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
 				DEFINES_MODULE = YES;
-				EMBEDDED_CONTENT_CONTAINS_SWIFT = NO;
 				INFOPLIST_FILE = "UV APP/Info.plist";
+				IPHONEOS_DEPLOYMENT_TARGET = 9.0;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
 				PRODUCT_BUNDLE_IDENTIFIER = "org.uvindex.UV-Index-App";
 				PRODUCT_NAME = UVAPP;
 				PROVISIONING_PROFILE = "";
 				SWIFT_OBJC_BRIDGING_HEADER = "UVAPP-Bridging-Header.h";
+				TARGETED_DEVICE_FAMILY = "1,2";
 			};
 			name = Release;
 		};

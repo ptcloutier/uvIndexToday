@@ -2,22 +2,18 @@
 //  ViewController.h
 //  UV APP
 //
-//  Created by Clyfford Millet on 7/15/16.
-//  Copyright © 2016 Clyff IOS supercompany. All rights reserved.
+//  Created by perrin cloutier on 7/15/16.
+//  Copyright © 2016 ptcloutier. All rights reserved.
 //
-
 
 #import <UIKit/UIKit.h>
 #import <CoreLocation/CoreLocation.h>
 #import "InformationViewController.h"
 
-
 @interface ViewController : UIViewController <CLLocationManagerDelegate,UIGestureRecognizerDelegate>
-
 
 @property (strong, nonatomic) IBOutlet UIImageView *backgroundView;
 @property (strong, nonatomic) IBOutlet UILabel *uvLabel;
-//@property (strong, nonatomic) IBOutlet UILabel *label1;
 @property (weak, nonatomic) IBOutlet UILabel *label2;
 @property (strong, nonatomic) IBOutlet UILabel *label3;
 @property (strong, nonatomic) IBOutlet UILabel *label4;
@@ -44,7 +40,6 @@
 @property (nonatomic) NSString *currentDate;
 @property (nonatomic) NSString *currentTime;
 @property (nonatomic) NSString *currentDay;
-
 @property (strong, nonatomic) NSMutableArray *imageNames;
 @property (strong, nonatomic)   NSString *myAddress;
 @property (nonatomic) BOOL textInvisible;
@@ -58,19 +53,9 @@
 @property (strong, nonatomic) NSTimer *uvTimer;
 @property (strong, nonatomic) NSTimer *messageTimer;
 @property (strong, nonatomic) NSNumber *background;
-//-(void)changeBackgroundImage;
-//-(void)configureLabelwithText:(NSString *)text andColor:(UIColor *)color andFont:(UIFont *)font;
-
-//collections for hourly forecast
 @property (strong, nonatomic) NSMutableArray *hourlyStringValues;
 @property (strong, nonatomic) NSMutableArray *hourlyNumberValues;
--(void)configureLabel:(NSString *)text andFont:(UIFont *)font andNumberOfLines:(int)topNumberOfLines;
 -(void)uvIndexRating;
-
-
-
-
-
-
+-(void)locationManager:(CLLocationManager *)manager didUpdateLocations:(NSArray<CLLocation *> *)locations;
 @end
 

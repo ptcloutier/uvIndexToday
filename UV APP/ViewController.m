@@ -2,15 +2,11 @@
 //  ViewController.m
 //  UV APP
 //
-//  Created by Clyfford Millet on 7/15/16.
-//  Copyright © 2016 Clyff IOS supercompany. All rights reserved.
+//  Created by perrin cloutier on 7/15/16.
+//  Copyright © 2016 ptcloutier. All rights reserved.
 //
 
 #import "ViewController.h"
-#import <QuartzCore/QuartzCore.h>
-//#import "UVAPP-Bridging-Header.h"
-
-
 
 @interface ViewController ()
 
@@ -18,68 +14,32 @@
 
 @implementation ViewController
 
-
-// To do list:
-//app icons
- //start apple submission process
-//uvlabel w x h 275:373
-//constraints fr stack view height to bckgrd height 6:10
-
-
-- (void)viewWillAppear:(BOOL)animated{
-    [self loadFromPList];
-    if ( self.getNewData == TRUE){
-        [self doFetchCurrentLocation];
-        [self getCurrentDateAndTime];
-        [self didGetUVData];
-    }
-}
-
-- (void)viewDidLoad {
+- (void)viewDidLoad
+{
     [super viewDidLoad];
-    
-    
-    //configure views and properties
     [self fadeOut];
     [self fadeIn];
     self.displayShown = FALSE;
     self.isWeeHours = FALSE;
     self.getNewData = FALSE;
     self.dataNil = TRUE;
-    
-    self.uvLabel.text = [NSString stringWithFormat:@"UV" ];
-    self.label2.text = @"INDEX";//self.currentTime;
+    self.label2.text = @"I  N  D  E  X";//self.currentTime;
     self.label2.textColor = [UIColor colorWithRed:255.0/255.0 green:239.0/255.0 blue:226.0/255.0 alpha:1.0];
     self.label2.font = [UIFont systemFontOfSize:40 weight:UIFontWeightLight];
-    
+    self.uvLabel.text = [NSString stringWithFormat:@"UV" ];
     self.uvLabel.textColor = [UIColor colorWithRed:255.0/255.0 green:239.0/255.0 blue:226.0/255.0 alpha:1.0];
     self.uvLabel.font = [UIFont systemFontOfSize:250 weight:UIFontWeightUltraLight];
-    
-//    self.label2.text = @"INDEX" ;
-//    self.label2.textColor = [UIColor colorWithRed:255.0/255.0 green:239.0/255.0 blue:226.0/255.0 alpha:1.0];
-//    self.label2.font = [UIFont systemFontOfSize:50 weight:UIFontWeightLight];
-    
-
-    
-    //display uv index upon opening app
     self.timer = [NSTimer scheduledTimerWithTimeInterval:2 target:self selector:@selector(didGetUVData) userInfo:nil repeats:NO];
-    
-    //start background animation
-//    self.backgroundView.image = [UIImage imageNamed:@"sun7.jpg"];
     [self loadImages];
     self.timer = [NSTimer scheduledTimerWithTimeInterval:0.1 target:self selector:@selector(changeBackgroundImage) userInfo:nil repeats:YES];
-    
     // check if time is between midnight and 6 am , if it is, display UV Index = 0, don't make API call
     [self weeHours];
-    //get location
-    if (self.isWeeHours == FALSE){ //if false, it's later than 6 am & before midnight, get time, location and call API
     self.locationManager = [[CLLocationManager alloc] init]; // calls getData
     self.locationManager.delegate = self;
     self.locationManager.desiredAccuracy = kCLLocationAccuracyBest;
     self.geocoder = [[CLGeocoder alloc] init];
     [self.locationManager requestWhenInUseAuthorization];
     [self doFetchCurrentLocation];
-    }
     // get time
     [self getCurrentDateAndTime];
     //initialize gesture recognizers
@@ -99,24 +59,27 @@
     UISwipeGestureRecognizer * swipeDown = [[UISwipeGestureRecognizer alloc]initWithTarget:self action:@selector(handleGesture:)];
     [swipeDown setDirection:UISwipeGestureRecognizerDirectionDown];
     [self.view addGestureRecognizer:swipeDown];
-
-   
 }
 
--(void)configureLabel:(NSString *)text andFont:(UIFont *)font andNumberOfLines:(int)topNumberOfLines
+- (void)viewWillAppear:(BOOL)animated
 {
-    
+    [super viewWillAppear:animated];
+    [self loadFromPList];
+    if ( self.getNewData == TRUE){
+        [self doFetchCurrentLocation];
+        [self getCurrentDateAndTime];
+    }
 }
 
-
- // execute this method to start fetching location
--(void)doFetchCurrentLocation {
-    // fetching current location start from here
-    self.locationFetchCounter = 0;
+-(void)doFetchCurrentLocation
+{
+    // execute this method to start fetching location
+     self.locationFetchCounter = 0;
     [self.locationManager requestWhenInUseAuthorization];
-    [self.locationManager startUpdatingLocation];
+    [self.locationManager startUpdatingLocation];// startUpdatingLocation
 }
 
+#pragma mark - Location
 
 -(void)locationManager:(CLLocationManager *)manager didUpdateLocations:(NSArray<CLLocation *> *)locations{
     // this delegate method is constantly invoked every some miliseconds.
@@ -148,12 +111,8 @@
     NSLog(@"failed to fetch current location : %@", error);
 }
 
-
-
-- (void)reverseGeocodeLocation:(CLLocation *)location {
-    //Set properties
-    
-    
+- (void)reverseGeocodeLocation:(CLLocation *)location
+{
     [self.geocoder reverseGeocodeLocation:location completionHandler:^(NSArray *placemarks, NSError *error) {
         NSLog(@"Finding address");
         if (error) {
@@ -167,19 +126,15 @@
     }];
 }
 
-- (void)didReceiveMemoryWarning {
-    [super didReceiveMemoryWarning];
-    // Dispose of any resources that can be recreated.
-}
--(void)getCurrentDateAndTime {
-    
+#pragma mark - Time
+
+-(void)getCurrentDateAndTime
+{
     NSDate *militaryTime = [NSDate date]; // get 24 hour time
     NSDate *time = [NSDate date];   // for display time
     NSDate *dateAndTime = [NSDate date]; // for API comparison
     NSDate *date = [NSDate date]; // for display date
     NSDate *day = [NSDate date]; // for display day of the week
-    
-
     NSDateFormatter *militaryViewFormatter = [[NSDateFormatter alloc]init];
     [militaryViewFormatter setTimeStyle:(NSDateFormatterMediumStyle)];
     NSDateFormatter *timeViewFormatter = [[NSDateFormatter alloc]init];
@@ -190,7 +145,6 @@
     [dateFormatter setDateStyle:NSDateFormatterMediumStyle];
     NSDateFormatter *dayFormatter = [[NSDateFormatter alloc]init];
     [dateFormatter setDateStyle:NSDateFormatterMediumStyle];
-    
     NSString *militaryViewFormat = @"kk";
     [militaryViewFormatter setDateFormat:militaryViewFormat];
     NSString *timeViewFormat = @"h:mm a";
@@ -201,8 +155,6 @@
     [dateFormatter setDateFormat:dateForView];
     NSString *dayForView = @"EEEE";
     [dayFormatter setDateFormat:dayForView];
-
-    
     self.militaryTime = [militaryViewFormatter stringFromDate:militaryTime];
     self.currentTime = [timeViewFormatter stringFromDate:time];
     self.currentHour = [timeFormatter stringFromDate:dateAndTime]; // for API
@@ -210,7 +162,6 @@
     self.currentDay = [dayFormatter stringFromDate:day];
 
 }
-
 
 -(void)weeHours
 {
@@ -221,7 +172,7 @@
     [dateFormatter setDateFormat:timeFormat];
     NSString *hour = [dateFormatter stringFromDate:dateAndTime];
     self.currentHourValue = [hour intValue];
-    if ( self.currentHourValue < 7){
+    if ((self.currentHourValue < 7)|| (self.currentHourValue == 24)){
         self.uvIndex = @"0";
         self.isWeeHours = TRUE;
    }
@@ -246,36 +197,28 @@
     else{
         self.middayDataIssue = FALSE;  
     }
-    
 }
 
--(void)getData { //Call EPA API
-    
+#pragma mark - Data
+
+-(void)getData
+{
     self.hourlyNumberValues = [[NSMutableArray alloc]init];
-    
     NSURL *url = [NSURL URLWithString:[NSString stringWithFormat:@"https://iaspub.epa.gov/enviro/efservice/getEnvirofactsUVHOURLY/ZIP/%@/JSON", self.zipcode]];
     NSURLSession *session = [NSURLSession sessionWithConfiguration:[NSURLSessionConfiguration defaultSessionConfiguration]];
     NSMutableURLRequest *request = [[NSMutableURLRequest alloc]initWithURL:url];
     request.HTTPMethod = @"GET";
     [[session dataTaskWithRequest:request completionHandler:^(NSData *data, NSURLResponse *response, NSError *error) {
         if(error){
-
-                NSTimeInterval duration = 0.5f;
-                [UIView transitionWithView:self.label3
-                                  duration:duration
-                                   options:UIViewAnimationOptionTransitionCrossDissolve
-                                animations:^{
-                                    self.label3.text = error.localizedDescription;
-                                    self.label3.textColor = [UIColor colorWithRed:255.0/255.0 green:239.0/255.0 blue:226.0/255.0 alpha:1.0];
-                                    self.label3.font = [UIFont systemFontOfSize:12 weight:UIFontWeightSemibold];
-                                    
-                                } completion:nil];
-                [self startTimer];
-    }
-    else{
-        if( data != nil){
-            NSError *jsonError;
-            NSArray *jsonToDictionary = [NSJSONSerialization JSONObjectWithData:data options:NSJSONReadingMutableContainers error:&jsonError];
+            self.label3.text = error.localizedDescription;
+            self.label3.textColor = [UIColor colorWithRed:255.0/255.0 green:239.0/255.0 blue:226.0/255.0 alpha:1.0];
+            self.label3.font = [UIFont systemFontOfSize:12 weight:UIFontWeightSemibold];
+            [self startTimer];
+        }
+        else{
+            if( data != nil){
+                NSError *jsonError;
+                NSArray *jsonToDictionary = [NSJSONSerialization JSONObjectWithData:data options:NSJSONReadingMutableContainers error:&jsonError];
              self.uvIndex = nil;
             for (NSDictionary *dicts in jsonToDictionary) {
                 [self.hourlyNumberValues addObject:[dicts valueForKey:@"UV_VALUE"]];
@@ -287,6 +230,7 @@
                     self.uvNumber = [dicts valueForKey:@"UV_VALUE"];
                     self.uvIndex = [self.uvNumber stringValue];
                 }
+                self.dataNil = FALSE;
             }
         [self setHourlyValues];
             self.dataNil = FALSE;
@@ -300,12 +244,8 @@
     }]
      resume];
 }
-      
 
-
-
-    
--(void)setHourlyValues
+- (void)setHourlyValues
 {
     self.hourlyStringValues = [[NSMutableArray alloc]init];
     NSString *string;
@@ -319,20 +259,10 @@
     while ([self.hourlyStringValues count] > 15){
         [self.hourlyStringValues removeLastObject];
     }
-//   
-//    
-//    for (int i = 0; i < self.hourlyStringValues.count;i++) {
-//        UILabel * label = self.hourlyLabels[i];
-//        label.text = self.hourlyStringValues[i];
-//     }
-   
 }
 
-
-
-
--(void)saveToPList {
-    
+-(void)saveToPList
+{
     NSMutableDictionary *dataForPlist = [[NSMutableDictionary alloc] initWithCapacity:4];
     if (self.background != nil) {
         [dataForPlist setObject:self.background forKey:@"background"];
@@ -343,21 +273,71 @@
     [dataForPlist writeToFile:filePath atomically:YES];
 }
 
--(void)loadFromPList {
-    
+-(void)loadFromPList
+{
     NSArray *paths = NSSearchPathForDirectoriesInDomains(NSDocumentDirectory, NSUserDomainMask, YES);
     NSString *documentsDirectoryPath = [paths objectAtIndex:0];
     NSString *filePath = [documentsDirectoryPath stringByAppendingPathComponent:@"settings.plist"];
     NSFileManager *fileManager = [NSFileManager defaultManager];
-    
     if ([fileManager fileExistsAtPath:filePath]) {
         NSMutableDictionary *savedData =[[NSMutableDictionary alloc] initWithContentsOfFile:filePath];
-        
         if ([savedData objectForKey:@"background"] != nil) {
             self.background = [savedData objectForKey:@"background"];
         }
     }
 }
+
+- (void)didGetUVData
+{
+    if( self.dataNil == TRUE){
+        [self dataNilMessage];
+    }
+    else{
+        [self displayUVData];
+    }
+}
+
+-(void)startTimer
+{
+    if (!self.uvTimer){
+        self.uvTimer = [NSTimer scheduledTimerWithTimeInterval:1.0 target:self selector:@selector(doFetchCurrentLocation) userInfo:nil repeats:YES];
+        self.messageTimer = [NSTimer scheduledTimerWithTimeInterval:1.0 target:self selector:@selector(didGetUVData) userInfo:nil repeats:YES];
+        self.displayShown = TRUE;
+    }
+}
+
+-(void)stopTimerIfTimer
+{
+    if(self.uvTimer){
+        [self.uvTimer invalidate];
+        [self.messageTimer invalidate];
+        self.dataNil = FALSE;
+    }
+}
+
+-(void)dataNilMessage
+{
+    [self startTimer];
+}
+
+-(void)uvIndexRating
+{
+    if ([self.uvNumber intValue] < 3){
+        self.uvRating = @"L o w";
+    }
+    else if (([self.uvNumber intValue] >=3) && ([self.uvNumber intValue] < 6 )){
+        self.uvRating = @"M o d e r a t e";
+    }
+    else if (([self.uvNumber intValue] > 5 ) && ([self.uvNumber intValue] < 8 )){
+        self.uvRating = @"H i g h";
+    }
+    else if ([self.uvNumber intValue] > 7 ){
+        self.uvRating = @"V e r y  H i g h";
+    }
+}
+
+
+#pragma mark - User Interface
 
 -(void)fadeOut
 {
@@ -378,7 +358,6 @@
                     } completion:nil];
 }
 
-
 -(void)fadeIn
 {
     NSTimeInterval duration = 1.9f;
@@ -388,7 +367,6 @@
                     animations:^{
                         self.backgroundView.alpha = 1.0;
                     } completion:nil];
-
 }
 
 
@@ -405,13 +383,11 @@
             [self.imageNames addObject:image];
         }
     }
-    
 }
-
 
 -(void)changeBackgroundImage
 {
-    NSString *imageName;
+    NSString *imageName = @"sun1.jpg";
     long imageNumber = 0;
         if (self.imageNames == nil){
             self.imageNames = [[NSMutableArray alloc]init];
@@ -432,263 +408,65 @@
         imageNumber = [self.background intValue] + 1;
         imageName = [self.imageNames objectAtIndex:imageNumber];
     }
-    //             If you want to make a short sequence that stops
-    //          if (( [self.background intValue] + 1) == [imageNames count]){
-    //            [self.timer invalidate];
-    //            self.timer = nil;
-    //            imageNumber = [self.background intValue];
-    //            imageName = [imageNames objectAtIndex:imageNumber];
-    //            imageNumber = 0;
-    //}
     self.backgroundView.image = [UIImage imageNamed:imageName];
     self.background = [NSNumber numberWithLong:imageNumber]; //plist archive
     [self saveToPList];
-    //    NSLog(@"%lu %@", imageNumber, imageName);
 }
 
-
-
-
--(void)handleGesture:(UIGestureRecognizer *)recognizer
+- (void)createLabels
 {
-    if ( recognizer.state == UIGestureRecognizerStateEnded ){
-        
-        if (self.displayShown == FALSE){
-        [self didGetUVData];
-        }
-        else {
-            [self showInfoViewController];
-        }
-    }
+    UIFont *font = [UIFont systemFontOfSize:35 weight:UIFontWeightLight];
+    [self setLabels:self.uvLabel withText:@"UV" withTextColor:[UIColor colorWithRed:255.0/255.0 green:239.0/255.0 blue:226.0/255.0 alpha:1.0] andFont:[UIFont systemFontOfSize:250 weight:UIFontWeightUltraLight]];
+    [self setLabels:self.label2 withText:@"I  N  D  E  X" withTextColor:[UIColor colorWithRed:255.0/255.0 green:239.0/255.0 blue:226.0/255.0 alpha:1.0] andFont:[UIFont systemFontOfSize:40 weight:UIFontWeightLight]];
+//    [self setLabels:self.label3 withText: @"" withTextColor:[UIColor clearColor] andFont:font];
+    [self setLabels:self.label4 withText:self.currentTime withTextColor:[UIColor colorWithRed:255.0/255.0 green:239.0/255.0 blue:226.0/255.0 alpha:1.0] andFont:font];
+    [self setLabels:self.label5 withText:self.currentDate withTextColor:[UIColor colorWithRed:255.0/255.0 green:239.0/255.0 blue:226.0/255.0 alpha:1.0] andFont:font];
+    [self setLabels:self.label6 withText:self.city withTextColor:[UIColor colorWithRed:255.0/255.0 green:239.0/255.0 blue:226.0/255.0 alpha:1.0] andFont:font];
 }
-  
 
--(void)didGetUVData
+- (void)setLabels:(UILabel *)label withText:(NSString *)text withTextColor:(UIColor *)textColor andFont:(UIFont *)font
 {
-    if( self.dataNil == TRUE){
-        [self dataNilMessage];
-    }
-    else if (self.middayDataIssue == TRUE){
-        [self middayCase];
-    }
-    else {
-        [self displayUVData];
-    }
+    NSTimeInterval duration = 0.4f;
+    [UIView transitionWithView:label
+                      duration:duration
+                       options:UIViewAnimationOptionTransitionCrossDissolve
+                    animations:^{
+                        if(text){
+                        label.text = text;
+                        }
+                        if(textColor){
+                        label.textColor = textColor;
+                        }
+                        if(font){
+                        label.font = font;
+                        }
+                    }
+                    completion:nil];
 }
 
-
-
--(void)startTimer
-{
-    if (!self.uvTimer){
-        self.uvTimer = [NSTimer scheduledTimerWithTimeInterval:1.0 target:self selector:@selector(doFetchCurrentLocation) userInfo:nil repeats:YES];
-        self.messageTimer = [NSTimer scheduledTimerWithTimeInterval:1.0 target:self selector:@selector(didGetUVData) userInfo:nil repeats:YES];
-        self.displayShown = TRUE;
-    }
-}
--(void)stopTimerIfTimer
-{
-    if(self.uvTimer){
-        [self.uvTimer invalidate];
-        [self.messageTimer invalidate];
-        self.dataNil = FALSE;
-    }
-}
-
-//if error error object .localized description  
--(void)dataNilMessage
-{
-//    NSTimeInterval duration = 0.5f;
-//    [UIView transitionWithView:self.label2
-//                      duration:duration
-//                       options:UIViewAnimationOptionTransitionCrossDissolve
-//                    animations:^{
-//                        self.label2.text = @"SEARCHING...";
-//                        self.label2.font = [UIFont systemFontOfSize:49 weight:UIFontWeightLight];
-//                        
-//                    } completion:nil];
-    [self startTimer];
-}
-
-
-
--(void)middayCase
+- (void)displayUVData
 {
     [self stopTimerIfTimer];
-    
-        NSTimeInterval duration = 0.5f;
-    
-//    [UIView transitionWithView:self.label2
-//                      duration:duration
-//                       options:UIViewAnimationOptionTransitionCrossDissolve
-//                    animations:^{
-//                        self.label2.text = @"SEARCHING...";
-//                        self.label2.font = [UIFont systemFontOfSize:49 weight:UIFontWeightLight];
-//                        
-//                    } completion:nil];
- 
-//    [UIView transitionWithView:self.label3
-//                      duration:duration
-//                       options:UIViewAnimationOptionTransitionCrossDissolve
-//                    animations:^{
-//                        self.label3.text =  self.currentTime;
-//                        self.label3.textColor = [UIColor colorWithRed:255.0/255.0 green:239.0/255.0 blue:226.0/255.0 alpha:1.0];
-//                        self.label3.font = [UIFont systemFontOfSize:40 weight:UIFontWeightLight];
-//                    } completion:nil];
-    
-    [UIView transitionWithView:self.label4
-                      duration:duration
-                       options:UIViewAnimationOptionTransitionCrossDissolve
-                    animations:^{
-                        self.label4.text = self.currentTime;//self.currentDay;
-                        self.label4.textColor = [UIColor colorWithRed:255.0/255.0 green:239.0/255.0 blue:226.0/255.0 alpha:1.0];
-                        self.label4.font = [UIFont systemFontOfSize:35 weight:UIFontWeightLight];
-                    } completion:nil];
-    
-    [UIView transitionWithView:self.label5
-                      duration:duration
-                       options:UIViewAnimationOptionTransitionCrossDissolve
-                    animations:^{
-                        self.label5.text = self.currentDate; //date;
-                        self.label5.textColor = [UIColor colorWithRed:255.0/255.0 green:239.0/255.0 blue:226.0/255.0 alpha:1.0];
-                        self.label5.font = [UIFont systemFontOfSize:35 weight:UIFontWeightLight];
-                    } completion:nil];
-    
-     [UIView transitionWithView:self.label6
-                      duration:duration
-                       options:UIViewAnimationOptionTransitionCrossDissolve
-                    animations:^{
-                        self.label6.text = self.city;
-                        self.label6.textColor = [UIColor colorWithRed:255.0/255.0 green:239.0/255.0 blue:226.0/255.0 alpha:1.0];
-                        self.label6.font = [UIFont systemFontOfSize:35 weight:UIFontWeightLight];
-                    } completion:nil];
-   
-    [UIView transitionWithView:self.uvLabel
-                      duration:duration
-                       options:UIViewAnimationOptionTransitionCrossDissolve
-                    animations:^{
-                        self.uvLabel.text = @"UV";
-                    } completion:nil];
-    
-    [UIView transitionWithView:self.label2
-                      duration:duration
-                       options:UIViewAnimationOptionTransitionCrossDissolve
-                    animations:^{
-                        self.label2.text = @"INDEX";//self.currentTime;
-                        self.label2.textColor = [UIColor colorWithRed:255.0/255.0 green:239.0/255.0 blue:226.0/255.0 alpha:1.0];
-                        self.label2.font = [UIFont systemFontOfSize:40 weight:UIFontWeightLight];
-                    } completion:nil];
-
-    self.displayShown = TRUE;
-    
-
-}
-
--(void)displayUVData
-{
-    
-    [self stopTimerIfTimer];
-    
-    NSTimeInterval duration = 0.5f;
-    
-    [UIView transitionWithView:self.uvLabel
-                      duration:duration
-                       options:UIViewAnimationOptionTransitionCrossDissolve
-                    animations:^{
-                        self.uvLabel.text = @"UV";
-                         } completion:nil];
-                        
-    [UIView transitionWithView:self.label2
-                      duration:duration
-                       options:UIViewAnimationOptionTransitionCrossDissolve
-                    animations:^{
-                        self.label2.text = @"INDEX";//self.currentTime;
-                        self.label2.textColor = [UIColor colorWithRed:255.0/255.0 green:239.0/255.0 blue:226.0/255.0 alpha:1.0];
-                        self.label2.font = [UIFont systemFontOfSize:40 weight:UIFontWeightLight];
-
-                    } completion:nil];
-    
-    [UIView transitionWithView:self.label4
-                      duration:duration
-                       options:UIViewAnimationOptionTransitionCrossDissolve
-                    animations:^{
-                        self.label4.text =  self.currentTime;//self.currentDay;
-                        self.label4.textColor = [UIColor colorWithRed:255.0/255.0 green:239.0/255.0 blue:226.0/255.0 alpha:1.0];
-                        self.label4.font = [UIFont systemFontOfSize:35 weight:UIFontWeightLight];
-                    } completion:nil];
-    
-    [UIView transitionWithView:self.label5
-                      duration:duration
-                       options:UIViewAnimationOptionTransitionCrossDissolve
-                    animations:^{
-                        self.label5.text = self.currentDate; //date;
-                        self.label5.textColor = [UIColor colorWithRed:255.0/255.0 green:239.0/255.0 blue:226.0/255.0 alpha:1.0];
-                        self.label5.font = [UIFont systemFontOfSize:35 weight:UIFontWeightLight];
-                    } completion:nil];
-    
-    [UIView transitionWithView:self.label6
-                      duration:duration
-                       options:UIViewAnimationOptionTransitionCrossDissolve
-                    animations:^{
-                        self.label6.text = self.city;
-                        self.label6.textColor = [UIColor colorWithRed:255.0/255.0 green:239.0/255.0 blue:226.0/255.0 alpha:1.0];
-                        self.label6.font = [UIFont systemFontOfSize:35 weight:UIFontWeightLight];
-                    } completion:nil];
-    
-    
-    
-//    [UIView transitionWithView:self.label3
-//                      duration:duration
-//                       options:UIViewAnimationOptionTransitionCrossDissolve
-//                    animations:^{
-//                        self.label3.text = @"UV INDEX";
-//                        self.label3.textColor = [UIColor colorWithRed:255.0/255.0 green:239.0/255.0 blue:226.0/255.0 alpha:1.0];
-//                         self.label3.font = [UIFont systemFontOfSize:40 weight:UIFontWeightLight];
-//                        
-//                    } completion:nil];
-   [NSTimer scheduledTimerWithTimeInterval:2 target:self selector:@selector(showUVIndexRating) userInfo:nil repeats:NO];
-    
+    [self createLabels];
+    if (self.middayDataIssue == false){
+        [NSTimer scheduledTimerWithTimeInterval:2 target:self selector:@selector(showUVIndexRating) userInfo:nil repeats:NO];
+    }
     self.displayShown = TRUE;
 }
-
-
--(void)uvIndexRating
-{
-    if ([self.uvNumber intValue] < 3){
-       self.uvRating = @"Low";
-    }
-    else if (([self.uvNumber intValue] >=3) && ([self.uvNumber intValue] < 6 )){
-        self.uvRating = @"Moderate";
-    }
-    else if (([self.uvNumber intValue] > 5 ) && ([self.uvNumber intValue] < 8 )){
-            self.uvRating = @"High";
-    }
-    else if (([self.uvNumber intValue] > 7 ) && ([self.uvNumber intValue] < 11 )){
-        self.uvRating = @"Very High";
-    }
-    else if ([self.uvNumber intValue] >= 11 ){
-        self.uvRating = @"Very High";
-        
-    }
-}
-
-
-
 
 -(void)showUVIndexRating
 {
+    if( self.isWeeHours ==TRUE){
+        self.uvIndex = @"0";
+    }
     [self uvIndexRating];
-    
     NSTimeInterval duration = 0.5f;
-
     [UIView transitionWithView:self.uvLabel
                       duration:duration
                        options:UIViewAnimationOptionTransitionCrossDissolve
                     animations:^{
                         self.uvLabel.text = self.uvIndex;
-                        
                     } completion:nil];
-    
     [UIView transitionWithView:self.label2
                       duration:duration
                        options:UIViewAnimationOptionTransitionCrossDissolve
@@ -696,25 +474,35 @@
                         self.label2.text = self.uvRating;//self.currentTime;
                         self.label2.textColor = [UIColor colorWithRed:255.0/255.0 green:239.0/255.0 blue:226.0/255.0 alpha:1.0];
                         self.label2.font = [UIFont systemFontOfSize:40 weight:UIFontWeightLight];
-
                     } completion:nil];
-    
 [NSTimer scheduledTimerWithTimeInterval:2 target:self selector:@selector(displayUVData) userInfo:nil repeats:NO];
-    
-    
 }
+
+#pragma mark - User Interaction
+
+-(void)handleGesture:(UIGestureRecognizer *)recognizer
+{
+    if ( recognizer.state == UIGestureRecognizerStateEnded ){
+        
+        if (self.displayShown == FALSE){
+            [self didGetUVData];
+        }
+        else {
+            [self showInfoViewController];
+        }
+    }
+}
+
+
+#pragma mark - Navigation
 
 -(void)showInfoViewController
 {
     InformationViewController *informationViewController = [self.storyboard instantiateViewControllerWithIdentifier:@"informationViewController"];
-    
-    self.getNewData = TRUE; // refresh data when second view controller is dismissed 
-    
+    self.getNewData = TRUE; // refresh data when second view controller is dismissed
     if (self.dataNil == TRUE){
         informationViewController.passedDataNil = TRUE;
-        //                informationViewController.passedDisplayNumber =
         [self presentViewController:informationViewController animated:YES completion:nil];
-        
     }
     else {
         informationViewController.passedHourlyStringValues = self.hourlyStringValues;
@@ -722,14 +510,13 @@
         informationViewController.passedDate = [NSString stringWithFormat:@"%@",[self.currentDate uppercaseString]];
         informationViewController.passedUvIndex = self.uvIndex;
         [self presentViewController:informationViewController animated:YES completion:nil];
-        
     }
 }
-             
 
-
-
-
+- (void)didReceiveMemoryWarning {
+    [super didReceiveMemoryWarning];
+    // Dispose of any resources that can be recreated.
+}
 
 
 @end

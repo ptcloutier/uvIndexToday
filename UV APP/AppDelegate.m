@@ -2,8 +2,8 @@
 //  AppDelegate.m
 //  UV APP
 //
-//  Created by Clyfford Millet on 7/15/16.
-//  Copyright © 2016 Clyff IOS supercompany. All rights reserved.
+//  Created by perrin cloutier on 7/15/16.
+//  Copyright © 2016 ptcloutier. All rights reserved.
 //
 
 #import "AppDelegate.h"
