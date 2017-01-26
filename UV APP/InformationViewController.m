@@ -14,8 +14,7 @@
 
 @implementation InformationViewController
 
-- (void)viewWillAppear:(BOOL)animated
-{
+- (void)viewWillAppear:(BOOL)animated {
     [super viewWillAppear:animated];
     [self loadFromPList];
     [self fadeOut];
@@ -68,8 +67,7 @@
 
 #pragma mark - Data 
 
--(void)saveToPList
-{
+-(void)saveToPList {
     NSMutableDictionary *dataForPlist = [[NSMutableDictionary alloc] initWithCapacity:4];
     if (self.background != nil) {
         [dataForPlist setObject:self.background forKey:@"background"];
@@ -80,8 +78,7 @@
     [dataForPlist writeToFile:filePath atomically:YES];
 }
 
--(void)loadFromPList
-{
+-(void)loadFromPList {
     NSArray *paths = NSSearchPathForDirectoriesInDomains(NSDocumentDirectory, NSUserDomainMask, YES);
     NSString *documentsDirectoryPath = [paths objectAtIndex:0];
     NSString *filePath = [documentsDirectoryPath stringByAppendingPathComponent:@"settings.plist"];
@@ -96,8 +93,7 @@
 
 #pragma mark - User Interaction 
 
--(void)handleSwipeRightGesture:(UIGestureRecognizer *)recognizer
-{
+-(void)handleSwipeRightGesture:(UIGestureRecognizer *)recognizer {
     if ( recognizer.state == UIGestureRecognizerStateEnded ){
         self.displayNumber--;
         if (self.displayNumber < 0){
@@ -113,8 +109,7 @@
     }
 }
 
--(void)handleSwipeLeftGesture:(UIGestureRecognizer *)recognizer
-{
+-(void)handleSwipeLeftGesture:(UIGestureRecognizer *)recognizer {
     if ( recognizer.state == UIGestureRecognizerStateEnded ){
         self.displayNumber++;
         if ((self.dataNil == TRUE) && (self.displayNumber == 3)){
@@ -131,8 +126,7 @@
     }
 }
 
--(void)handleSwipeDownGesture:(UIGestureRecognizer *)recognizer
-{
+-(void)handleSwipeDownGesture:(UIGestureRecognizer *)recognizer {
     if ( recognizer.state == UIGestureRecognizerStateEnded ){
         [self dismissViewControllerAnimated:YES completion:nil];
     }
@@ -140,8 +134,7 @@
 
 #pragma mark - User Interface
 
-- (void)configureTabsAndLabels
-{
+- (void)configureTabsAndLabels {
     UIColor *textColor = [UIColor colorWithRed:255.0/255.0 green:239.0/255.0 blue:226.0/255.0 alpha:1.0];
     self.labels = [[NSMutableArray alloc]initWithObjects:self.label1,self.label2,self.label3,self.label4,self.label5,self.label6, nil];
     for (UILabel *label in self.labels) {
@@ -152,8 +145,7 @@
     self.tabs = [[NSMutableArray alloc]initWithObjects:self.tab1,self.tab2,self.tab3,self.tab4,self.tab5,self.tab6,self.tab7, nil];
 }
 
--(void)changeDisplay
-{
+-(void)changeDisplay {
     switch (self.displayNumber) {
         case 0:
             [self configureTopLabel1:@"Hourly UV Index" andFontSize:30 andNumberOfLines:1 label2:[NSString stringWithFormat:@"7 am\t\t%@\n8 am\t\t%@\n9 am\t\t%@",self.hourlyStringValues[0],self.hourlyStringValues[1],self.hourlyStringValues[2]] label3: [NSString stringWithFormat:@"10 am\t\t%@\n11 am\t\t%@\n12 pm\t\t%@",self.hourlyStringValues[3],self.hourlyStringValues[4],self.hourlyStringValues[5]]label4:[NSString stringWithFormat:@"1 pm\t\t%@\n2 pm\t\t%@\n3 pm\t\t%@",self.hourlyStringValues[6],self.hourlyStringValues[7],self.hourlyStringValues[8]] label5:[NSString stringWithFormat:@"4 pm\t\t%@\n5 pm\t\t%@\n6 pm\t\t%@",self.hourlyStringValues[9],self.hourlyStringValues[10],self.hourlyStringValues[11]] label6:[NSString stringWithFormat:@"7 pm\t\t%@\n8 pm\t\t%@\n9 pm\t\t%@",self.hourlyStringValues[12],self.hourlyStringValues[13],self.hourlyStringValues[14]] andFontSize:20 andNumberOfLines:3];
@@ -195,8 +187,7 @@
     }
 }
 
-- (void)chooseTabDotToHighlight:(int)displayNumber
-{
+- (void)chooseTabDotToHighlight:(int)displayNumber {
     for (UIButton *tab in self.tabs) {
         tab.backgroundColor = self.tabColor;
     }
@@ -204,10 +195,8 @@
     highlightTab.backgroundColor = self.highlightColor;
 }
 
--(void)highlightTab
-{
+-(void)highlightTab {
     // grab value of self.displayNumber and use it to highlight the dot corresponding
-    
     switch (self.displayNumber) {
         case 0:
             [self chooseTabDotToHighlight:0];
@@ -235,8 +224,7 @@
     }
 }
 
--(void)configureTopLabel1:(NSString *)text1 andFontSize:(int)topFontsize andNumberOfLines:(int)topNumberOfLines label2:(NSString *)text2 label3:(NSString *)text3 label4:(NSString *)text4 label5:(NSString *)text5 label6:(NSString *)text6 andFontSize:(int)fontsize andNumberOfLines:(int)numberOfLines
-{
+-(void)configureTopLabel1:(NSString *)text1 andFontSize:(int)topFontsize andNumberOfLines:(int)topNumberOfLines label2:(NSString *)text2 label3:(NSString *)text3 label4:(NSString *)text4 label5:(NSString *)text5 label6:(NSString *)text6 andFontSize:(int)fontsize andNumberOfLines:(int)numberOfLines {
     NSTimeInterval duration = 0.2f;
     [UIView transitionWithView:self.label1
                       duration:duration
@@ -264,8 +252,7 @@
     }
 }
 
--(void)loadImages
-{
+-(void)loadImages {
     if (self.imageNames == nil){
         self.imageNames = [[NSMutableArray alloc]init];
         for ( int i = 1; i <= 42; i++){
@@ -280,8 +267,7 @@
 
 }
 
--(void)changeBackgroundImage
-{
+-(void)changeBackgroundImage {
     long imageNumber = 0;
     if (( [self.background intValue]+1) == [self.imageNames count]){
         imageNumber = 0;
@@ -297,8 +283,7 @@
     [self saveToPList];
 }
 
--(void)fadeOut
-{
+-(void)fadeOut {
     NSTimeInterval duration = 1.5f;
     [UIView transitionWithView:self.backgroundView
                       duration:duration
@@ -308,8 +293,7 @@
                     } completion:nil];
 }
 
--(void)fadeIn
-{
+-(void)fadeIn {
     NSTimeInterval duration = 1.9f;
     [UIView transitionWithView:self.backgroundView
                       duration:duration

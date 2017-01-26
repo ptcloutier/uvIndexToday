@@ -14,8 +14,7 @@
 
 @implementation ViewController
 
-- (void)viewDidLoad
-{
+- (void)viewDidLoad {
     [super viewDidLoad];
     [self fadeOut];
     [self fadeIn];
@@ -23,12 +22,7 @@
     self.isWeeHours = FALSE;
     self.getNewData = FALSE;
     self.dataNil = TRUE;
-    self.label2.text = @"I  N  D  E  X";//self.currentTime;
-    self.label2.textColor = [UIColor colorWithRed:255.0/255.0 green:239.0/255.0 blue:226.0/255.0 alpha:1.0];
-    self.label2.font = [UIFont systemFontOfSize:40 weight:UIFontWeightLight];
-    self.uvLabel.text = [NSString stringWithFormat:@"UV" ];
-    self.uvLabel.textColor = [UIColor colorWithRed:255.0/255.0 green:239.0/255.0 blue:226.0/255.0 alpha:1.0];
-    self.uvLabel.font = [UIFont systemFontOfSize:250 weight:UIFontWeightUltraLight];
+    [self configureTopLabels];
     self.timer = [NSTimer scheduledTimerWithTimeInterval:2 target:self selector:@selector(didGetUVData) userInfo:nil repeats:NO];
     [self loadImages];
     self.timer = [NSTimer scheduledTimerWithTimeInterval:0.1 target:self selector:@selector(changeBackgroundImage) userInfo:nil repeats:YES];
@@ -61,8 +55,7 @@
     [self.view addGestureRecognizer:swipeDown];
 }
 
-- (void)viewWillAppear:(BOOL)animated
-{
+- (void)viewWillAppear:(BOOL)animated {
     [super viewWillAppear:animated];
     [self loadFromPList];
     if ( self.getNewData == TRUE){
@@ -71,8 +64,7 @@
     }
 }
 
--(void)doFetchCurrentLocation
-{
+-(void)doFetchCurrentLocation {
     // execute this method to start fetching location
      self.locationFetchCounter = 0;
     [self.locationManager requestWhenInUseAuthorization];
@@ -81,7 +73,7 @@
 
 #pragma mark - Location
 
--(void)locationManager:(CLLocationManager *)manager didUpdateLocations:(NSArray<CLLocation *> *)locations{
+-(void)locationManager:(CLLocationManager *)manager didUpdateLocations:(NSArray<CLLocation *> *)locations {
     // this delegate method is constantly invoked every some miliseconds.
     // we only need to receive the first response, so we skip the others.
     if (self.locationFetchCounter > 0) return;
@@ -111,8 +103,7 @@
     NSLog(@"failed to fetch current location : %@", error);
 }
 
-- (void)reverseGeocodeLocation:(CLLocation *)location
-{
+- (void)reverseGeocodeLocation:(CLLocation *)location {
     [self.geocoder reverseGeocodeLocation:location completionHandler:^(NSArray *placemarks, NSError *error) {
         NSLog(@"Finding address");
         if (error) {
@@ -128,8 +119,7 @@
 
 #pragma mark - Time
 
--(void)getCurrentDateAndTime
-{
+-(void)getCurrentDateAndTime {
     NSDate *militaryTime = [NSDate date]; // get 24 hour time
     NSDate *time = [NSDate date];   // for display time
     NSDate *dateAndTime = [NSDate date]; // for API comparison
@@ -163,8 +153,7 @@
 
 }
 
--(void)weeHours
-{
+-(void)weeHours {
     NSDate *dateAndTime = [NSDate date];
     NSDateFormatter *dateFormatter = [[NSDateFormatter alloc]init];
     [dateFormatter setDateStyle:NSDateFormatterMediumStyle];
@@ -178,8 +167,7 @@
    }
 }
 
--(void)midday
-{
+-(void)midday {
     self.militaryTimeValue = [self.militaryTime intValue];
     if((self.militaryTimeValue  > 9 ) && (self.militaryTimeValue  < 15)){ // need 24 hour value
         self.isMidday = TRUE;
@@ -189,8 +177,7 @@
     }
 }
 
--(void)middayDataCheck
-{
+-(void)middayDataCheck {
     if ((self.isMidday == TRUE) && ([self.uvIndex isEqualToString:@"0"])){
         self.middayDataIssue = TRUE; // if it's midday and uvIndex reads 0 there is bad data, show hourly but also show "searching" for current uv index
     }
@@ -201,8 +188,7 @@
 
 #pragma mark - Data
 
--(void)getData
-{
+-(void)getData {
     self.hourlyNumberValues = [[NSMutableArray alloc]init];
     NSURL *url = [NSURL URLWithString:[NSString stringWithFormat:@"https://iaspub.epa.gov/enviro/efservice/getEnvirofactsUVHOURLY/ZIP/%@/JSON", self.zipcode]];
     NSURLSession *session = [NSURLSession sessionWithConfiguration:[NSURLSessionConfiguration defaultSessionConfiguration]];
@@ -245,14 +231,13 @@
      resume];
 }
 
-- (void)setHourlyValues
-{
+- (void)setHourlyValues {
     self.hourlyStringValues = [[NSMutableArray alloc]init];
     NSString *string;
-    NSInteger numb = 0;
+    NSInteger num = 0;
     for (NSNumber *hourNumber in self.hourlyNumberValues) {
-        numb = [hourNumber integerValue];
-        string = [NSString stringWithFormat:@"%ld",(long)numb];
+        num = [hourNumber integerValue];
+        string = [NSString stringWithFormat:@"%ld",(long)num];
         [self.hourlyStringValues addObject: string];
         
     }
@@ -261,8 +246,7 @@
     }
 }
 
--(void)saveToPList
-{
+-(void)saveToPList {
     NSMutableDictionary *dataForPlist = [[NSMutableDictionary alloc] initWithCapacity:4];
     if (self.background != nil) {
         [dataForPlist setObject:self.background forKey:@"background"];
@@ -273,8 +257,7 @@
     [dataForPlist writeToFile:filePath atomically:YES];
 }
 
--(void)loadFromPList
-{
+-(void)loadFromPList {
     NSArray *paths = NSSearchPathForDirectoriesInDomains(NSDocumentDirectory, NSUserDomainMask, YES);
     NSString *documentsDirectoryPath = [paths objectAtIndex:0];
     NSString *filePath = [documentsDirectoryPath stringByAppendingPathComponent:@"settings.plist"];
@@ -287,8 +270,7 @@
     }
 }
 
-- (void)didGetUVData
-{
+- (void)didGetUVData {
     if( self.dataNil == TRUE){
         [self dataNilMessage];
     }
@@ -297,8 +279,7 @@
     }
 }
 
--(void)startTimer
-{
+-(void)startTimer {
     if (!self.uvTimer){
         self.uvTimer = [NSTimer scheduledTimerWithTimeInterval:1.0 target:self selector:@selector(doFetchCurrentLocation) userInfo:nil repeats:YES];
         self.messageTimer = [NSTimer scheduledTimerWithTimeInterval:1.0 target:self selector:@selector(didGetUVData) userInfo:nil repeats:YES];
@@ -306,8 +287,7 @@
     }
 }
 
--(void)stopTimerIfTimer
-{
+-(void)stopTimerIfTimer {
     if(self.uvTimer){
         [self.uvTimer invalidate];
         [self.messageTimer invalidate];
@@ -315,13 +295,11 @@
     }
 }
 
--(void)dataNilMessage
-{
+-(void)dataNilMessage {
     [self startTimer];
 }
 
--(void)uvIndexRating
-{
+-(void)uvIndexRating {
     if ([self.uvNumber intValue] < 3){
         self.uvRating = @"L o w";
     }
@@ -339,8 +317,7 @@
 
 #pragma mark - User Interface
 
--(void)fadeOut
-{
+-(void)fadeOut {
     NSTimeInterval duration = 1.5f;
     [UIView transitionWithView:self.backgroundView
                       duration:duration
@@ -358,8 +335,7 @@
                     } completion:nil];
 }
 
--(void)fadeIn
-{
+-(void)fadeIn {
     NSTimeInterval duration = 1.9f;
     [UIView transitionWithView:self.backgroundView
                       duration:duration
@@ -370,8 +346,7 @@
 }
 
 
--(void)loadImages
-{
+-(void)loadImages {
     if (self.imageNames == nil){
         self.imageNames = [[NSMutableArray alloc]init];
         for ( int i = 1; i <= 42; i++){
@@ -385,8 +360,7 @@
     }
 }
 
--(void)changeBackgroundImage
-{
+-(void)changeBackgroundImage {
     NSString *imageName = @"sun1.jpg";
     long imageNumber = 0;
         if (self.imageNames == nil){
@@ -413,8 +387,16 @@
     [self saveToPList];
 }
 
-- (void)createLabels
-{
+- (void)configureTopLabels {
+    self.label2.text = @"I  N  D  E  X";//self.currentTime;
+    self.label2.textColor = [UIColor colorWithRed:255.0/255.0 green:239.0/255.0 blue:226.0/255.0 alpha:1.0];
+    self.label2.font = [UIFont systemFontOfSize:40 weight:UIFontWeightLight];
+    self.uvLabel.text = [NSString stringWithFormat:@"UV" ];
+    self.uvLabel.textColor = [UIColor colorWithRed:255.0/255.0 green:239.0/255.0 blue:226.0/255.0 alpha:1.0];
+    self.uvLabel.font = [UIFont systemFontOfSize:250 weight:UIFontWeightUltraLight];
+}
+
+- (void)createLabels {
     UIFont *font = [UIFont systemFontOfSize:35 weight:UIFontWeightLight];
     [self setLabels:self.uvLabel withText:@"UV" withTextColor:[UIColor colorWithRed:255.0/255.0 green:239.0/255.0 blue:226.0/255.0 alpha:1.0] andFont:[UIFont systemFontOfSize:250 weight:UIFontWeightUltraLight]];
     [self setLabels:self.label2 withText:@"I  N  D  E  X" withTextColor:[UIColor colorWithRed:255.0/255.0 green:239.0/255.0 blue:226.0/255.0 alpha:1.0] andFont:[UIFont systemFontOfSize:40 weight:UIFontWeightLight]];
@@ -424,8 +406,7 @@
     [self setLabels:self.label6 withText:self.city withTextColor:[UIColor colorWithRed:255.0/255.0 green:239.0/255.0 blue:226.0/255.0 alpha:1.0] andFont:font];
 }
 
-- (void)setLabels:(UILabel *)label withText:(NSString *)text withTextColor:(UIColor *)textColor andFont:(UIFont *)font
-{
+- (void)setLabels:(UILabel *)label withText:(NSString *)text withTextColor:(UIColor *)textColor andFont:(UIFont *)font {
     NSTimeInterval duration = 0.4f;
     [UIView transitionWithView:label
                       duration:duration
@@ -444,8 +425,7 @@
                     completion:nil];
 }
 
-- (void)displayUVData
-{
+- (void)displayUVData {
     [self stopTimerIfTimer];
     [self createLabels];
     if (self.middayDataIssue == false){
@@ -454,8 +434,7 @@
     self.displayShown = TRUE;
 }
 
--(void)showUVIndexRating
-{
+-(void)showUVIndexRating {
     if( self.isWeeHours ==TRUE){
         self.uvIndex = @"0";
     }
@@ -480,8 +459,7 @@
 
 #pragma mark - User Interaction
 
--(void)handleGesture:(UIGestureRecognizer *)recognizer
-{
+-(void)handleGesture:(UIGestureRecognizer *)recognizer {
     if ( recognizer.state == UIGestureRecognizerStateEnded ){
         
         if (self.displayShown == FALSE){
@@ -496,8 +474,7 @@
 
 #pragma mark - Navigation
 
--(void)showInfoViewController
-{
+-(void)showInfoViewController {
     InformationViewController *informationViewController = [self.storyboard instantiateViewControllerWithIdentifier:@"informationViewController"];
     self.getNewData = TRUE; // refresh data when second view controller is dismissed
     if (self.dataNil == TRUE){
