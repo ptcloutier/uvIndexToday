@@ -9,11 +9,13 @@
 /* Begin PBXBuildFile section */
 		5379DA601D3949FC005FEE80 /* main.m in Sources */ = {isa = PBXBuildFile; fileRef = 5379DA5F1D3949FC005FEE80 /* main.m */; };
 		5379DA631D3949FC005FEE80 /* AppDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = 5379DA621D3949FC005FEE80 /* AppDelegate.m */; };
-		5379DA661D3949FC005FEE80 /* ViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 5379DA651D3949FC005FEE80 /* ViewController.m */; };
+		5379DA661D3949FC005FEE80 /* UVViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 5379DA651D3949FC005FEE80 /* UVViewController.m */; };
 		5379DA691D3949FC005FEE80 /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 5379DA671D3949FC005FEE80 /* Main.storyboard */; };
 		5379DA6E1D3949FC005FEE80 /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 5379DA6C1D3949FC005FEE80 /* LaunchScreen.storyboard */; };
 		5379DA7E1D397FB4005FEE80 /* CoreLocation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 5379DA7D1D397FB4005FEE80 /* CoreLocation.framework */; };
 		5379DAAB1D3D72C7005FEE80 /* Contents.json in Resources */ = {isa = PBXBuildFile; fileRef = 5379DA991D3D72C7005FEE80 /* Contents.json */; };
+		A70FDB2B1E42378400C4220A /* UVConstants.m in Sources */ = {isa = PBXBuildFile; fileRef = A70FDB2A1E42378400C4220A /* UVConstants.m */; };
+		A70FDB311E4244CA00C4220A /* UVDataManager.m in Sources */ = {isa = PBXBuildFile; fileRef = A70FDB301E4244CA00C4220A /* UVDataManager.m */; };
 		A77F5A5E1D5271BF00889483 /* sun1.jpg in Resources */ = {isa = PBXBuildFile; fileRef = A77F5A341D5271BF00889483 /* sun1.jpg */; };
 		A77F5A5F1D5271BF00889483 /* sun10.jpg in Resources */ = {isa = PBXBuildFile; fileRef = A77F5A351D5271BF00889483 /* sun10.jpg */; };
 		A77F5A601D5271BF00889483 /* sun11.jpg in Resources */ = {isa = PBXBuildFile; fileRef = A77F5A361D5271BF00889483 /* sun11.jpg */; };
@@ -56,8 +58,7 @@
 		A77F5A851D5271BF00889483 /* sun7.jpg in Resources */ = {isa = PBXBuildFile; fileRef = A77F5A5B1D5271BF00889483 /* sun7.jpg */; };
 		A77F5A861D5271BF00889483 /* sun8.jpg in Resources */ = {isa = PBXBuildFile; fileRef = A77F5A5C1D5271BF00889483 /* sun8.jpg */; };
 		A77F5A871D5271BF00889483 /* sun9.jpg in Resources */ = {isa = PBXBuildFile; fileRef = A77F5A5D1D5271BF00889483 /* sun9.jpg */; };
-		A7C366631D43FF2800C613CA /* InformationViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = A7C366621D43FF2800C613CA /* InformationViewController.m */; };
-		A7C960F21D526D65000FFFAE /* sunbunfunjpg--1-.jpg in Resources */ = {isa = PBXBuildFile; fileRef = A7C960F11D526D65000FFFAE /* sunbunfunjpg--1-.jpg */; };
+		A7C366631D43FF2800C613CA /* UVInformationViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = A7C366621D43FF2800C613CA /* UVInformationViewController.m */; };
 		A7C960F41D526F97000FFFAE /* Media4.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = A7C960F31D526F97000FFFAE /* Media4.xcassets */; };
 /* End PBXBuildFile section */
 
@@ -66,13 +67,17 @@
 		5379DA5F1D3949FC005FEE80 /* main.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = main.m; sourceTree = "<group>"; };
 		5379DA611D3949FC005FEE80 /* AppDelegate.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = AppDelegate.h; sourceTree = "<group>"; };
 		5379DA621D3949FC005FEE80 /* AppDelegate.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = AppDelegate.m; sourceTree = "<group>"; };
-		5379DA641D3949FC005FEE80 /* ViewController.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = ViewController.h; sourceTree = "<group>"; };
-		5379DA651D3949FC005FEE80 /* ViewController.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = ViewController.m; sourceTree = "<group>"; };
+		5379DA641D3949FC005FEE80 /* UVViewController.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = UVViewController.h; sourceTree = "<group>"; };
+		5379DA651D3949FC005FEE80 /* UVViewController.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = UVViewController.m; sourceTree = "<group>"; };
 		5379DA681D3949FC005FEE80 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/Main.storyboard; sourceTree = "<group>"; };
 		5379DA6D1D3949FC005FEE80 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/LaunchScreen.storyboard; sourceTree = "<group>"; };
 		5379DA6F1D3949FC005FEE80 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		5379DA7D1D397FB4005FEE80 /* CoreLocation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreLocation.framework; path = System/Library/Frameworks/CoreLocation.framework; sourceTree = SDKROOT; };
 		5379DA991D3D72C7005FEE80 /* Contents.json */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.json; path = Contents.json; sourceTree = "<group>"; };
+		A70FDB291E42378400C4220A /* UVConstants.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = UVConstants.h; sourceTree = "<group>"; };
+		A70FDB2A1E42378400C4220A /* UVConstants.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = UVConstants.m; sourceTree = "<group>"; };
+		A70FDB2F1E4244CA00C4220A /* UVDataManager.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = UVDataManager.h; sourceTree = "<group>"; };
+		A70FDB301E4244CA00C4220A /* UVDataManager.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = UVDataManager.m; sourceTree = "<group>"; };
 		A77F5A341D5271BF00889483 /* sun1.jpg */ = {isa = PBXFileReference; lastKnownFileType = image.jpeg; path = sun1.jpg; sourceTree = "<group>"; };
 		A77F5A351D5271BF00889483 /* sun10.jpg */ = {isa = PBXFileReference; lastKnownFileType = image.jpeg; path = sun10.jpg; sourceTree = "<group>"; };
 		A77F5A361D5271BF00889483 /* sun11.jpg */ = {isa = PBXFileReference; lastKnownFileType = image.jpeg; path = sun11.jpg; sourceTree = "<group>"; };
@@ -115,9 +120,8 @@
 		A77F5A5B1D5271BF00889483 /* sun7.jpg */ = {isa = PBXFileReference; lastKnownFileType = image.jpeg; path = sun7.jpg; sourceTree = "<group>"; };
 		A77F5A5C1D5271BF00889483 /* sun8.jpg */ = {isa = PBXFileReference; lastKnownFileType = image.jpeg; path = sun8.jpg; sourceTree = "<group>"; };
 		A77F5A5D1D5271BF00889483 /* sun9.jpg */ = {isa = PBXFileReference; lastKnownFileType = image.jpeg; path = sun9.jpg; sourceTree = "<group>"; };
-		A7C366611D43FF2800C613CA /* InformationViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = InformationViewController.h; sourceTree = "<group>"; };
-		A7C366621D43FF2800C613CA /* InformationViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = InformationViewController.m; sourceTree = "<group>"; };
-		A7C960F11D526D65000FFFAE /* sunbunfunjpg--1-.jpg */ = {isa = PBXFileReference; lastKnownFileType = image.jpeg; path = "sunbunfunjpg--1-.jpg"; sourceTree = "<group>"; };
+		A7C366611D43FF2800C613CA /* UVInformationViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = UVInformationViewController.h; sourceTree = "<group>"; };
+		A7C366621D43FF2800C613CA /* UVInformationViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = UVInformationViewController.m; sourceTree = "<group>"; };
 		A7C960F31D526F97000FFFAE /* Media4.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Media4.xcassets; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
@@ -155,11 +159,16 @@
 			children = (
 				5379DA611D3949FC005FEE80 /* AppDelegate.h */,
 				5379DA621D3949FC005FEE80 /* AppDelegate.m */,
-				5379DA641D3949FC005FEE80 /* ViewController.h */,
-				5379DA651D3949FC005FEE80 /* ViewController.m */,
-				A7C366611D43FF2800C613CA /* InformationViewController.h */,
-				A7C366621D43FF2800C613CA /* InformationViewController.m */,
+				5379DA641D3949FC005FEE80 /* UVViewController.h */,
+				5379DA651D3949FC005FEE80 /* UVViewController.m */,
+				A70FDB291E42378400C4220A /* UVConstants.h */,
+				A70FDB2A1E42378400C4220A /* UVConstants.m */,
+				A7C366611D43FF2800C613CA /* UVInformationViewController.h */,
+				A7C366621D43FF2800C613CA /* UVInformationViewController.m */,
+				A70FDB2F1E4244CA00C4220A /* UVDataManager.h */,
+				A70FDB301E4244CA00C4220A /* UVDataManager.m */,
 				5379DA671D3949FC005FEE80 /* Main.storyboard */,
+				A77F5A331D5271BF00889483 /* Background Animation */,
 				5379DA981D3D72C7005FEE80 /* AppIcon.appiconset */,
 				5379DA6C1D3949FC005FEE80 /* LaunchScreen.storyboard */,
 				5379DA6F1D3949FC005FEE80 /* Info.plist */,
@@ -180,14 +189,12 @@
 			isa = PBXGroup;
 			children = (
 				A7C960F31D526F97000FFFAE /* Media4.xcassets */,
-				A7C960F11D526D65000FFFAE /* sunbunfunjpg--1-.jpg */,
-				A77F5A331D5271BF00889483 /* suns */,
 				5379DA991D3D72C7005FEE80 /* Contents.json */,
 			);
 			path = AppIcon.appiconset;
 			sourceTree = "<group>";
 		};
-		A77F5A331D5271BF00889483 /* suns */ = {
+		A77F5A331D5271BF00889483 /* Background Animation */ = {
 			isa = PBXGroup;
 			children = (
 				A77F5A341D5271BF00889483 /* sun1.jpg */,
@@ -233,7 +240,8 @@
 				A77F5A5C1D5271BF00889483 /* sun8.jpg */,
 				A77F5A5D1D5271BF00889483 /* sun9.jpg */,
 			);
-			path = suns;
+			name = "Background Animation";
+			path = AppIcon.appiconset/suns;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -335,7 +343,6 @@
 				A77F5A6C1D5271BF00889483 /* sun22.jpg in Resources */,
 				A7C960F41D526F97000FFFAE /* Media4.xcassets in Resources */,
 				A77F5A831D5271BF00889483 /* sun5.jpg in Resources */,
-				A7C960F21D526D65000FFFAE /* sunbunfunjpg--1-.jpg in Resources */,
 				A77F5A5F1D5271BF00889483 /* sun10.jpg in Resources */,
 				A77F5A5E1D5271BF00889483 /* sun1.jpg in Resources */,
 				A77F5A701D5271BF00889483 /* sun26.jpg in Resources */,
@@ -351,8 +358,10 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				A7C366631D43FF2800C613CA /* InformationViewController.m in Sources */,
-				5379DA661D3949FC005FEE80 /* ViewController.m in Sources */,
+				A70FDB2B1E42378400C4220A /* UVConstants.m in Sources */,
+				A7C366631D43FF2800C613CA /* UVInformationViewController.m in Sources */,
+				A70FDB311E4244CA00C4220A /* UVDataManager.m in Sources */,
+				5379DA661D3949FC005FEE80 /* UVViewController.m in Sources */,
 				5379DA631D3949FC005FEE80 /* AppDelegate.m in Sources */,
 				5379DA601D3949FC005FEE80 /* main.m in Sources */,
 			);

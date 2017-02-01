@@ -1,6 +1,6 @@
 //
 //  AppDelegate.h
-//  UV APP
+//  UV Index Today
 //
 //  Created by perrin cloutier on 7/15/16.
 //  Copyright © 2016 ptcloutier. All rights reserved.

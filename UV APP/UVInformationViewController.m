@@ -1,18 +1,22 @@
 //
-//  InformationViewController.m
-//  UVAPP
+//  UVInformationViewController.m
+//  UV Index Today
 //
 //  Created by perrin cloutier on 7/23/16.
 //  Copyright © 2016 ptcloutier. All rights reserved.
 //
 
-#import "InformationViewController.h"
+#import "UVInformationViewController.h"
+#import "UVConstants.h"
+#import "UVDataManager.h"
 
-@interface InformationViewController ()
+@interface UVInformationViewController ()
+
+@property (nonatomic) UVDataManager *dataManager;
 
 @end
 
-@implementation InformationViewController
+@implementation UVInformationViewController
 
 - (void)viewWillAppear:(BOOL)animated {
     [super viewWillAppear:animated];
@@ -23,49 +27,23 @@
 
 - (void)viewDidLoad {
     [super viewDidLoad];
-    //set values for hourly
-    self.dataNil = self.passedDataNil;
-    if(self.dataNil == 0){
-        self.hourlyStringValues = self.passedHourlyStringValues;
-        self.uvIndex = self.passedUvIndex;
-        self.city = self.passedCity;
-        self.date = self.passedDate;
-    }
-    else {
+    UVDataManager *dataManager = [UVDataManager sharedManager];
+    self.dataManager = dataManager;
+    
+    if(self.dataManager.dataNil == true){
         self.hourlyStringValues = [NSMutableArray arrayWithObjects: @"-",@"-",@"-",@"-",@"-",@"-",@"-",@"-",@"-",@"-",@"-",@"-",@"-",@"-",@"-", nil];
-        self.uvIndex = @"-" ;
-        self.city = @"-" ;
-        self.date = @"-" ;
+    }else{
+        self.hourlyStringValues = self.dataManager.hourlyStringValues;
     }
     [self configureTabsAndLabels];
     self.displayNumber = 0;
     [self changeDisplay];
     [self loadImages];
     self.timer = [NSTimer scheduledTimerWithTimeInterval:0.1 target:self selector:@selector(changeBackgroundImage) userInfo:nil repeats:YES];
-    UITapGestureRecognizer *tap = [[UITapGestureRecognizer alloc]initWithTarget:self action:@selector(handleSwipeLeftGesture:)];
-    tap.numberOfTapsRequired = 1;
-    [self.view addGestureRecognizer:tap];
-    tap.delegate = self;
-    
-    UISwipeGestureRecognizer * swipeLeft = [[UISwipeGestureRecognizer alloc]initWithTarget:self action:@selector(handleSwipeLeftGesture:)];
-    [swipeLeft setDirection:UISwipeGestureRecognizerDirectionLeft];
-    [self.view addGestureRecognizer:swipeLeft];
-    
-    UISwipeGestureRecognizer * swipeRight = [[UISwipeGestureRecognizer alloc]initWithTarget:self action:@selector(handleSwipeRightGesture:)];
-    [swipeRight setDirection:UISwipeGestureRecognizerDirectionRight];
-    [self.view addGestureRecognizer:swipeRight];
-    
-    UISwipeGestureRecognizer * swipeUp = [[UISwipeGestureRecognizer alloc]initWithTarget:self action:@selector(handleSwipeLeftGesture:)];
-    [swipeUp setDirection:UISwipeGestureRecognizerDirectionUp];
-    [self.view addGestureRecognizer:swipeUp];
-    
-    UISwipeGestureRecognizer * swipeDown = [[UISwipeGestureRecognizer alloc]initWithTarget:self action:@selector(handleSwipeDownGesture:)];
-    [swipeDown setDirection:UISwipeGestureRecognizerDirectionDown];
-    [self.view addGestureRecognizer:swipeDown];
-    
+    [self initializeGestureRecognizers];
 }
 
-#pragma mark - Data 
+#pragma mark - Background Animation  
 
 -(void)saveToPList {
     NSMutableDictionary *dataForPlist = [[NSMutableDictionary alloc] initWithCapacity:4];
@@ -127,12 +105,12 @@
 }
 
 -(void)handleSwipeDownGesture:(UIGestureRecognizer *)recognizer {
-    if ( recognizer.state == UIGestureRecognizerStateEnded ){
+    if (recognizer.state == UIGestureRecognizerStateEnded ){
         [self dismissViewControllerAnimated:YES completion:nil];
     }
 }
 
-#pragma mark - User Interface
+#pragma mark - Display
 
 - (void)configureTabsAndLabels {
     UIColor *textColor = [UIColor colorWithRed:255.0/255.0 green:239.0/255.0 blue:226.0/255.0 alpha:1.0];
@@ -255,11 +233,11 @@
 -(void)loadImages {
     if (self.imageNames == nil){
         self.imageNames = [[NSMutableArray alloc]init];
-        for ( int i = 1; i <= 42; i++){
+        for ( int i = 1; i <= kAnimationCellCount; i++){
             NSString *image = [NSString stringWithFormat:@"sun%d.jpg", i ];
             [self.imageNames addObject:image];
         }
-        for ( int i = 41; i >0; i--){
+        for ( int i = kAnimationCellCount-1; i >0; i--){
             NSString *image = [NSString stringWithFormat:@"sun%d.jpg", i ];
             [self.imageNames addObject:image];
         }
@@ -301,6 +279,31 @@
                     animations:^{
                         self.backgroundView.alpha = 1.0;
                     } completion:nil];
+}
+
+#pragma mark - Gestures
+
+- (void)initializeGestureRecognizers {
+    UITapGestureRecognizer *tap = [[UITapGestureRecognizer alloc]initWithTarget:self action:@selector(handleSwipeLeftGesture:)];
+    tap.numberOfTapsRequired = 1;
+    [self.view addGestureRecognizer:tap];
+    tap.delegate = self;
+    
+    UISwipeGestureRecognizer * swipeLeft = [[UISwipeGestureRecognizer alloc]initWithTarget:self action:@selector(handleSwipeLeftGesture:)];
+    [swipeLeft setDirection:UISwipeGestureRecognizerDirectionLeft];
+    [self.view addGestureRecognizer:swipeLeft];
+    
+    UISwipeGestureRecognizer * swipeRight = [[UISwipeGestureRecognizer alloc]initWithTarget:self action:@selector(handleSwipeRightGesture:)];
+    [swipeRight setDirection:UISwipeGestureRecognizerDirectionRight];
+    [self.view addGestureRecognizer:swipeRight];
+    
+    UISwipeGestureRecognizer * swipeUp = [[UISwipeGestureRecognizer alloc]initWithTarget:self action:@selector(handleSwipeLeftGesture:)];
+    [swipeUp setDirection:UISwipeGestureRecognizerDirectionUp];
+    [self.view addGestureRecognizer:swipeUp];
+    
+    UISwipeGestureRecognizer * swipeDown = [[UISwipeGestureRecognizer alloc]initWithTarget:self action:@selector(handleSwipeDownGesture:)];
+    [swipeDown setDirection:UISwipeGestureRecognizerDirectionDown];
+    [self.view addGestureRecognizer:swipeDown];
 }
 
 - (void)didReceiveMemoryWarning {

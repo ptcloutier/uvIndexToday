@@ -1,6 +1,6 @@
 //
-//  InformationViewController.h
-//  UVAPP
+//  UVInformationViewController.h
+//  UV Index Today
 //
 //  Created by perrin cloutier on 7/23/16.
 //  Copyright © 2016 ptcloutier. All rights reserved.
@@ -8,7 +8,7 @@
 
 #import <UIKit/UIKit.h>
 
-@interface InformationViewController : UIViewController<UIGestureRecognizerDelegate>
+@interface UVInformationViewController : UIViewController<UIGestureRecognizerDelegate>
 
 @property (strong, nonatomic) IBOutlet UIImageView *backgroundView;
 @property (strong, nonatomic) IBOutlet UILabel *label1;
